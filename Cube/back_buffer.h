@@ -28,6 +28,8 @@ namespace Graphics
         void clear(const Color& color);
         void put(const Vector& vec, const Color& color);
         
+        void drawLine(const Vector& a, const Vector& b, const Color& color);
+        
         int width() const;
         int height() const;
         std::size_t size() const;

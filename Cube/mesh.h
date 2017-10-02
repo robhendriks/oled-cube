@@ -9,6 +9,18 @@ namespace World
 {
     using namespace Math;
     
+    struct Face
+    {
+        int a, b, c;
+        
+        Face(int a, int b, int c)
+        {
+            this->a = a;
+            this->b = b;
+            this->c = c;
+        }
+    };
+    
     class Camera;
     class Mesh
     {
@@ -18,9 +30,10 @@ namespace World
         Vector mPosition;
         Vector mRotation;
         std::vector<Vector> mVertices;
+        std::vector<Face> mFaces;
         
     public:
-        Mesh(const std::string& name, const std::vector<Vector>& vertices);
+        Mesh(const std::string& name, const std::vector<Vector>& vertices, const std::vector<Face>& faces);
         ~Mesh() = default;
         
         std::string& name();

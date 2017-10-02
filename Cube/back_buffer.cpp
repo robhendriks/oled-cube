@@ -43,6 +43,52 @@ namespace Graphics
         }
     }
     
+    void BackBuffer::drawLine(const Vector& a, const Vector& b, const Color& color)
+    {
+        /*float distance = (b - a).length();
+         
+         if (distance < 2) {
+         return;
+         }
+         
+         Vector center = a + (b - a) / 2;
+         
+         put(center, color);
+         
+         drawLine(a, center, color);
+         drawLine(center, b, color);*/
+        
+        int x0 = static_cast<int>(a.x);
+        int y0 = static_cast<int>(a.y);
+        int x1 = static_cast<int>(b.x);
+        int y1 = static_cast<int>(b.y);
+        
+        int dx = std::abs(x1 - x0);
+        int dy = std::abs(y1 - y0);
+        int sx = (x0 < x1) ? 1 : -1;
+        int sy = (y0 < y1) ? 1 : -1;
+        int err = dx - dy;
+        
+        while (true) {
+            put(Vector{static_cast<float>(x0), static_cast<float>(y0), 0}, color);
+            
+            if (x0 == x1 && y0 == y1) {
+                break;
+            }
+            
+            int e2 = 2 * err;
+            
+            if (e2 > -dy) {
+                err -= dy;
+                x0 += sx;
+            }
+            if (e2 < dx){
+                err += dx;
+                y0 += sy;
+            }
+        }
+    }
+    
     int BackBuffer::width() const
     {
         return mWidth;

@@ -17,23 +17,40 @@ int main(int argc, const char * argv[]) {
     Graphics::BackBuffer backBuffer{640, 480};
     
     World::Camera camera;
-    camera.setPosition({8, -10, 8});
+    camera.setPosition({0, 0, 10});
     camera.setTarget({0, 0, 0});
     
     std::vector<Math::Vector> cubeVertices = {
         {-1, 1, 1},
         {1, 1, 1},
         {-1, -1, 1},
-        {-1, -1, -1},
+        {1, -1, 1},
         {-1, 1, -1},
         {1, 1, -1},
-        {1, -1, 1},
         {1, -1, -1},
+        {-1, -1, -1},
     };
     
-    World::Mesh cubeMesh{"Cube", cubeVertices};
+    std::vector<World::Face> cubeFaces = {
+        {0, 1, 2},
+        {1, 2, 3},
+        {1, 3, 6},
+        {1, 5, 6},
+        {0, 1, 4},
+        {1, 4, 5},
+        {2, 3, 7},
+        {3, 6, 7},
+        {0, 2, 7},
+        {0, 4, 7},
+        {4, 5, 6},
+        {4, 6, 7},
+    };
     
-    camera.render(backBuffer, cubeMesh);
+    World::Mesh cubeMesh{"Cube", cubeVertices, cubeFaces};
+    
+    backBuffer.clear({0, 0, 0, 1});
+    
+    camera.render(backBuffer, cubeMesh, {1, 0, 1, 1});
     
     //
     // SDL SHIT

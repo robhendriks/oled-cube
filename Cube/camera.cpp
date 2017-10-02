@@ -2,7 +2,7 @@
 
 namespace World
 {
-    void Camera::render(Graphics::BackBuffer& buffer, const World::Mesh &mesh) const
+    void Camera::render(Graphics::BackBuffer& buffer, const World::Mesh &mesh, const Graphics::Color& color) const
     {
         Math::Matrix view;
         Math::Matrix::lookAt(mPosition, mTarget, Vector::up(), view);
@@ -17,11 +17,15 @@ namespace World
         
         Math::Matrix transform = world * view * projection;
         
-        for (const Vector& vertex : mesh.mVertices) {
-            Vector result;
-            project(buffer, vertex, transform, result);
+        for (const Face& face : mesh.mFaces) {
+            Vector a, b, c;
+            project(buffer, mesh.mVertices[face.a], transform, a);
+            project(buffer, mesh.mVertices[face.b], transform, b);
+            project(buffer, mesh.mVertices[face.c], transform, c);
             
-            buffer.put(result, {1, 0, 0, 1});
+            buffer.drawLine(a, b, color);
+            buffer.drawLine(b, c, color);
+            buffer.drawLine(c, a, color);
         }
     }
     

@@ -19,7 +19,7 @@ namespace World
         Camera() = default;
         ~Camera() = default;
         
-        void render(Graphics::BackBuffer& buffer, const Mesh& mesh) const;
+        void render(Graphics::BackBuffer& buffer, const Mesh& mesh, const Graphics::Color& color) const;
         void project(Graphics::BackBuffer& buffer, const Vector& vertex, const Matrix& transform, Vector& result) const;
         Vector& position();
         const Vector& position() const;
