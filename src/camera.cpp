@@ -12,8 +12,11 @@ namespace World
         Math::Matrix projection;
         Math::Matrix::perspective(0.78, aspect, 0.01, 1.0, projection);
         
-        Math::Matrix world;
-        Math::Matrix::translate(mesh.mPosition, world);
+        Math::Matrix translate, rotate, world;
+        Math::Matrix::translate(mesh.mPosition, translate);
+        Math::Matrix::rotate(mesh.mRotation.y, mesh.mRotation.x, mesh.mRotation.z, rotate);
+        
+        world = rotate * translate;
         
         Math::Matrix transform = world * view * projection;
         

@@ -44,6 +44,7 @@
 		D4309E1E1F82F3EC00A64511 /* back_buffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = back_buffer.cpp; sourceTree = "<group>"; };
 		D4309E1F1F82F3EC00A64511 /* camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = camera.cpp; sourceTree = "<group>"; };
 		D4309E201F82F3EC00A64511 /* mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mesh.cpp; sourceTree = "<group>"; };
+		D4309E251F82F51500A64511 /* quaternion.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = quaternion.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +111,7 @@
 				D4309E1B1F82F3E700A64511 /* mesh.h */,
 				D4309E151F82F3E700A64511 /* vector.h */,
 				D4309E161F82F3E700A64511 /* world.h */,
+				D4309E251F82F51500A64511 /* quaternion.h */,
 			);
 			name = Headers;
 			path = include;

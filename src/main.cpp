@@ -1,56 +1,77 @@
 #include <iostream>
+#include <fstream>
 #include <SDL2/SDL.h>
+#include <json.hpp>
 
 #include "math.h"
 #include "world.h"
-
 #include "graphics.h"
 
 SDL_Window *gWindow = nullptr;
 SDL_Renderer *gRenderer = nullptr;
 
+#define WIDTH 480
+#define HEIGHT 320
+
 int main(int argc, const char * argv[]) {
-    
     //
     // MATH SHIT
     
-    Graphics::BackBuffer backBuffer{640, 480};
+    Graphics::BackBuffer backBuffer{WIDTH, HEIGHT};
     
     World::Camera camera;
     camera.setPosition({0, 0, 10});
     camera.setTarget({0, 0, 0});
     
-    std::vector<Math::Vector> cubeVertices = {
-        {-1, 1, 1},
-        {1, 1, 1},
-        {-1, -1, 1},
-        {1, -1, 1},
-        {-1, 1, -1},
-        {1, 1, -1},
-        {1, -1, -1},
-        {-1, -1, -1},
-    };
+    // TODO: Clear this utter mess up pls
+    std::ifstream is("/Users/rob/Desktop/Torus.babylon");
+    nlohmann::json j = nlohmann::json::parse(is);
     
-    std::vector<World::Face> cubeFaces = {
-        {0, 1, 2},
-        {1, 2, 3},
-        {1, 3, 6},
-        {1, 5, 6},
-        {0, 1, 4},
-        {1, 4, 5},
-        {2, 3, 7},
-        {3, 6, 7},
-        {0, 2, 7},
-        {0, 4, 7},
-        {4, 5, 6},
-        {4, 6, 7},
-    };
+    std::vector<Math::Vector> vertices;
+    std::vector<World::Face> faces;
     
-    World::Mesh cubeMesh{"Cube", cubeVertices, cubeFaces};
+    nlohmann::json jMesh = j["meshes"][0];
+    nlohmann::json jVertices = jMesh["vertices"];
+    nlohmann::json jIndices = jMesh["indices"];
     
-    backBuffer.clear({0, 0, 0, 1});
+    int vertexStep = 1;
+    int uvCount = jMesh["uvCount"].get<int>();
     
-    camera.render(backBuffer, cubeMesh, {1, 0, 1, 1});
+    switch (uvCount) {
+        case 0:
+            vertexStep = 6; break;
+        case 1:
+            vertexStep = 8; break;
+        case 2:
+            vertexStep = 10; break;
+    }
+    
+    std::size_t vertexCount = jVertices.size() / vertexStep;
+    std::size_t indiceCount = jIndices.size() / 3;
+    
+    vertices.reserve(vertexCount);
+    faces.reserve(indiceCount);
+    
+    for (std::size_t i = 0; i < vertexCount; ++i) {
+        float x = jVertices[i * vertexStep].get<float>();
+        float y = jVertices[i * vertexStep + 1].get<float>();
+        float z = jVertices[i * vertexStep + 2].get<float>();
+        vertices.push_back(Math::Vector(x, y, z));
+    }
+    
+    for (std::size_t i = 0; i < indiceCount; ++i) {
+        int a = jIndices[i * 3].get<int>();
+        int b = jIndices[i * 3 + 1].get<int>();
+        int c = jIndices[i * 3 + 2].get<int>();
+        faces.push_back(World::Face{a, b, c});
+    }
+    
+    // TODO: Write importer class
+    // TODO: Improve mesh class
+    
+    World::Mesh cubeMesh{"Cube", vertices, faces};
+    cubeMesh.setPosition({0, 0, 0});
+    cubeMesh.setRotation({0, 0, 0});
     
     //
     // SDL SHIT
@@ -60,7 +81,7 @@ int main(int argc, const char * argv[]) {
         return 1;
     }
     
-    gWindow = SDL_CreateWindow("Cube", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN);
+    gWindow = SDL_CreateWindow("Cube", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_SHOWN);
     if (!gWindow) {
         std::cerr << "Error: #002\n";
         return 1;
@@ -74,6 +95,7 @@ int main(int argc, const char * argv[]) {
     
     bool quit = false;
     SDL_Event e;
+    int dirX = 1, dirY = 1;
     
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
@@ -85,9 +107,27 @@ int main(int argc, const char * argv[]) {
         SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
         SDL_RenderClear(gRenderer);
         
-        SDL_SetRenderDrawColor(gRenderer, 0xFF, 0x00, 0x00, 0xFF);
-        SDL_Rect rect{0, 0, 128, 64};
-        SDL_RenderFillRect(gRenderer, &rect);
+        cubeMesh.rotation().x += 0.01; // pitch
+        cubeMesh.rotation().y += 0.02; // yaw
+        cubeMesh.rotation().z += 0.01; // roll
+        
+        if (cubeMesh.position().x > 1) {
+            dirX = -1;
+        } else if (cubeMesh.position().x < -1) {
+            dirX = 1;
+        }
+        
+        if (cubeMesh.position().y > 1) {
+            dirY = -1;
+        } else if (cubeMesh.position().y < -1) {
+            dirY = 1;
+        }
+        
+        cubeMesh.position().x += 0.02 * dirX;
+        cubeMesh.position().y += 0.01 * dirY;
+        
+        backBuffer.clear({0, 0, 0, 1});
+        camera.render(backBuffer, cubeMesh, {1, 1, 1, 1});
         
         const std::vector<uint8_t>& buffer = backBuffer.buffer();
         uint32_t j = 0;

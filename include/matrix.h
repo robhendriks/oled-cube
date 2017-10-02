@@ -6,6 +6,7 @@
 #include <array>
 
 #include "vector.h"
+#include "quaternion.h"
 
 namespace Math
 {
@@ -46,6 +47,37 @@ namespace Math
             result.data[M41] = vec.x;
             result.data[M42] = vec.y;
             result.data[M43] = vec.z;
+        }
+        
+        static void rotate(float yaw, float pitch, float roll, Matrix& result)
+        {
+            Quaternion quat;
+            Quaternion::rotate(yaw, pitch, roll, quat);
+            rotate(quat, result);
+        }
+        
+        static void rotate(const Quaternion& rotation, Matrix& result)
+        {
+            float xx = rotation.x * rotation.x;
+            float yy = rotation.y * rotation.y;
+            float zz = rotation.z * rotation.z;
+            float xy = rotation.x * rotation.y;
+            float zw = rotation.z * rotation.w;
+            float zx = rotation.z * rotation.x;
+            float yw = rotation.y * rotation.w;
+            float yz = rotation.y * rotation.z;
+            float xw = rotation.x * rotation.w;
+            
+            result.identity();
+            result.data[M11] = 1.0f - (2.0f * (yy + zz));
+            result.data[M12] = 2.0f * (xy + zw);
+            result.data[M13] = 2.0f * (zx - yw);
+            result.data[M21] = 2.0f * (xy - zw);
+            result.data[M22] = 1.0f - (2.0f * (zz + xx));
+            result.data[M23] = 2.0f * (yz + xw);
+            result.data[M31] = 2.0f * (zx + yw);
+            result.data[M32] = 2.0f * (yz - xw);
+            result.data[M33] = 1.0f - (2.0f * (yy + xx));
         }
         
         static void lookAt(const Vector& eye, const Vector& target, const Vector& up, Matrix &result)
