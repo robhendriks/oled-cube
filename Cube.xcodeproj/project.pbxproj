@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D40124B11F8276A20007A2AD /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D40124B01F8276A20007A2AD /* main.cpp */; };
 		D40124BA1F8276C10007A2AD /* libSDL2main.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D40124B81F8276C10007A2AD /* libSDL2main.a */; };
 		D40124BB1F8276C10007A2AD /* libSDL2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D40124B91F8276C10007A2AD /* libSDL2.a */; };
-		D4EE54441F829A9600CA743D /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4EE54431F829A9600CA743D /* camera.cpp */; };
-		D4EE54461F829C7600CA743D /* mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4EE54451F829C7600CA743D /* mesh.cpp */; };
-		D4EE54491F82AF2000CA743D /* back_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4EE54481F82AF2000CA743D /* back_buffer.cpp */; };
+		D4309E211F82F3EC00A64511 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4309E1D1F82F3EC00A64511 /* main.cpp */; };
+		D4309E221F82F3EC00A64511 /* back_buffer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4309E1E1F82F3EC00A64511 /* back_buffer.cpp */; };
+		D4309E231F82F3EC00A64511 /* camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4309E1F1F82F3EC00A64511 /* camera.cpp */; };
+		D4309E241F82F3EC00A64511 /* mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4309E201F82F3EC00A64511 /* mesh.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,21 +29,21 @@
 
 /* Begin PBXFileReference section */
 		D40124AD1F8276A20007A2AD /* Cube */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Cube; sourceTree = BUILT_PRODUCTS_DIR; };
-		D40124B01F8276A20007A2AD /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		D40124B81F8276C10007A2AD /* libSDL2main.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2main.a; path = ../../../../usr/local/Cellar/sdl2/2.0.6/lib/libSDL2main.a; sourceTree = "<group>"; };
 		D40124B91F8276C10007A2AD /* libSDL2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSDL2.a; path = ../../../../usr/local/Cellar/sdl2/2.0.6/lib/libSDL2.a; sourceTree = "<group>"; };
-		D40124BC1F827B280007A2AD /* vector.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = vector.h; sourceTree = "<group>"; };
-		D40124BD1F827B8B0007A2AD /* math.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = math.h; sourceTree = "<group>"; };
-		D4309E111F82BD4700A64511 /* matrix.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = matrix.h; sourceTree = "<group>"; };
-		D4EE54401F82969F00CA743D /* camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = camera.h; sourceTree = "<group>"; };
-		D4EE54411F8296BD00CA743D /* mesh.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = mesh.h; sourceTree = "<group>"; };
-		D4EE54421F8296E800CA743D /* world.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = world.h; sourceTree = "<group>"; };
-		D4EE54431F829A9600CA743D /* camera.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = camera.cpp; sourceTree = "<group>"; };
-		D4EE54451F829C7600CA743D /* mesh.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = mesh.cpp; sourceTree = "<group>"; };
-		D4EE54471F82AF2000CA743D /* back_buffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = back_buffer.h; sourceTree = "<group>"; };
-		D4EE54481F82AF2000CA743D /* back_buffer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = back_buffer.cpp; sourceTree = "<group>"; };
-		D4EE544A1F82AF8A00CA743D /* color.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = color.h; sourceTree = "<group>"; };
-		D4EE544B1F82B00E00CA743D /* graphics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = graphics.h; sourceTree = "<group>"; };
+		D4309E141F82F3E700A64511 /* matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrix.h; sourceTree = "<group>"; };
+		D4309E151F82F3E700A64511 /* vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vector.h; sourceTree = "<group>"; };
+		D4309E161F82F3E700A64511 /* world.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = world.h; sourceTree = "<group>"; };
+		D4309E171F82F3E700A64511 /* color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = color.h; sourceTree = "<group>"; };
+		D4309E181F82F3E700A64511 /* graphics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graphics.h; sourceTree = "<group>"; };
+		D4309E191F82F3E700A64511 /* math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = math.h; sourceTree = "<group>"; };
+		D4309E1A1F82F3E700A64511 /* back_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = back_buffer.h; sourceTree = "<group>"; };
+		D4309E1B1F82F3E700A64511 /* mesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mesh.h; sourceTree = "<group>"; };
+		D4309E1C1F82F3E700A64511 /* camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = camera.h; sourceTree = "<group>"; };
+		D4309E1D1F82F3EC00A64511 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		D4309E1E1F82F3EC00A64511 /* back_buffer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = back_buffer.cpp; sourceTree = "<group>"; };
+		D4309E1F1F82F3EC00A64511 /* camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = camera.cpp; sourceTree = "<group>"; };
+		D4309E201F82F3EC00A64511 /* mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mesh.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,7 +62,8 @@
 		D40124A41F8276A20007A2AD = {
 			isa = PBXGroup;
 			children = (
-				D40124AF1F8276A20007A2AD /* Cube */,
+				D4309E131F82F3D100A64511 /* Headers */,
+				D4309E121F82F3CD00A64511 /* Sources */,
 				D40124AE1F8276A20007A2AD /* Products */,
 				D40124B71F8276C10007A2AD /* Frameworks */,
 			);
@@ -76,26 +77,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D40124AF1F8276A20007A2AD /* Cube */ = {
-			isa = PBXGroup;
-			children = (
-				D40124B01F8276A20007A2AD /* main.cpp */,
-				D40124BC1F827B280007A2AD /* vector.h */,
-				D40124BD1F827B8B0007A2AD /* math.h */,
-				D4EE54401F82969F00CA743D /* camera.h */,
-				D4EE54411F8296BD00CA743D /* mesh.h */,
-				D4EE54421F8296E800CA743D /* world.h */,
-				D4EE54431F829A9600CA743D /* camera.cpp */,
-				D4EE54451F829C7600CA743D /* mesh.cpp */,
-				D4EE54471F82AF2000CA743D /* back_buffer.h */,
-				D4EE54481F82AF2000CA743D /* back_buffer.cpp */,
-				D4EE544A1F82AF8A00CA743D /* color.h */,
-				D4EE544B1F82B00E00CA743D /* graphics.h */,
-				D4309E111F82BD4700A64511 /* matrix.h */,
-			);
-			path = Cube;
-			sourceTree = "<group>";
-		};
 		D40124B71F8276C10007A2AD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -103,6 +84,35 @@
 				D40124B81F8276C10007A2AD /* libSDL2main.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D4309E121F82F3CD00A64511 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				D4309E1E1F82F3EC00A64511 /* back_buffer.cpp */,
+				D4309E1F1F82F3EC00A64511 /* camera.cpp */,
+				D4309E1D1F82F3EC00A64511 /* main.cpp */,
+				D4309E201F82F3EC00A64511 /* mesh.cpp */,
+			);
+			name = Sources;
+			path = src;
+			sourceTree = "<group>";
+		};
+		D4309E131F82F3D100A64511 /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				D4309E1A1F82F3E700A64511 /* back_buffer.h */,
+				D4309E1C1F82F3E700A64511 /* camera.h */,
+				D4309E171F82F3E700A64511 /* color.h */,
+				D4309E181F82F3E700A64511 /* graphics.h */,
+				D4309E191F82F3E700A64511 /* math.h */,
+				D4309E141F82F3E700A64511 /* matrix.h */,
+				D4309E1B1F82F3E700A64511 /* mesh.h */,
+				D4309E151F82F3E700A64511 /* vector.h */,
+				D4309E161F82F3E700A64511 /* world.h */,
+			);
+			name = Headers;
+			path = include;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -162,10 +172,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4EE54491F82AF2000CA743D /* back_buffer.cpp in Sources */,
-				D4EE54441F829A9600CA743D /* camera.cpp in Sources */,
-				D40124B11F8276A20007A2AD /* main.cpp in Sources */,
-				D4EE54461F829C7600CA743D /* mesh.cpp in Sources */,
+				D4309E221F82F3EC00A64511 /* back_buffer.cpp in Sources */,
+				D4309E231F82F3EC00A64511 /* camera.cpp in Sources */,
+				D4309E241F82F3EC00A64511 /* mesh.cpp in Sources */,
+				D4309E211F82F3EC00A64511 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -45,18 +45,7 @@ namespace Graphics
     
     void BackBuffer::drawLine(const Vector& a, const Vector& b, const Color& color)
     {
-        /*float distance = (b - a).length();
-         
-         if (distance < 2) {
-         return;
-         }
-         
-         Vector center = a + (b - a) / 2;
-         
-         put(center, color);
-         
-         drawLine(a, center, color);
-         drawLine(center, b, color);*/
+        // Bresenham’s line algorithm
         
         int x0 = static_cast<int>(a.x);
         int y0 = static_cast<int>(a.y);
