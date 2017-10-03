@@ -27,7 +27,7 @@ int main(int argc, const char * argv[]) {
     std::ifstream is("/Users/rob/Desktop/Torus.babylon");
     nlohmann::json j = nlohmann::json::parse(is);
     
-    std::vector<Math::Vector> vertices;
+    std::vector<World::Vertex> vertices;
     std::vector<World::Face> faces;
     
     nlohmann::json jMesh = j["meshes"][0];
@@ -56,7 +56,16 @@ int main(int argc, const char * argv[]) {
         float x = jVertices[i * vertexStep].get<float>();
         float y = jVertices[i * vertexStep + 1].get<float>();
         float z = jVertices[i * vertexStep + 2].get<float>();
-        vertices.push_back(Math::Vector(x, y, z));
+        
+        float nx = jVertices[i * vertexStep + 3].get<float>();
+        float ny = jVertices[i * vertexStep + 4].get<float>();
+        float nz = jVertices[i * vertexStep + 5].get<float>();
+        
+        vertices.push_back(World::Vertex{
+            Math::Vector{x, y, z},
+            Math::Vector{nx, ny, nz},
+            Math::Vector{}
+        });
     }
     
     for (std::size_t i = 0; i < indiceCount; ++i) {
@@ -107,11 +116,11 @@ int main(int argc, const char * argv[]) {
         SDL_RenderClear(gRenderer);
         
         cubeMesh.rotation().x += 0.01; // pitch
-        cubeMesh.rotation().y += 0.02; // yaw
+        cubeMesh.rotation().y += 0.01; // yaw
         cubeMesh.rotation().z += 0.01; // roll
         
         backBuffer.clear({0, 0, 0, 1});
-        camera.render(backBuffer, cubeMesh, {1, 1, 1, 1});
+        camera.render(backBuffer, cubeMesh, {1, 0, 0, 1});
         
         const std::vector<uint8_t>& buffer = backBuffer.buffer();
         uint32_t j = 0;

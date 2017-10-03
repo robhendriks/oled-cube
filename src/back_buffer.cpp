@@ -55,9 +55,12 @@ namespace Graphics
         }
     }
     
-    void BackBuffer::drawLine(const Vector& a, const Vector& b, const Color& color)
+    void BackBuffer::drawLine(const World::Vertex& va, const World::Vertex& vb, const Color& color)
     {
         // Bresenham’s line algorithm
+        
+        Vector a = va.coords;
+        Vector b = vb.coords;
         
         int x0 = static_cast<int>(a.x);
         int y0 = static_cast<int>(a.y);
@@ -66,12 +69,13 @@ namespace Graphics
         
         int dx = std::abs(x1 - x0);
         int dy = std::abs(y1 - y0);
+        
         int sx = (x0 < x1) ? 1 : -1;
         int sy = (y0 < y1) ? 1 : -1;
         int err = dx - dy;
         
         while (true) {
-            put(Vector{static_cast<float>(x0), static_cast<float>(y0), 0}, color);
+            put(Vector{static_cast<float>(x0), static_cast<float>(y0), a.z}, color);
             
             if (x0 == x1 && y0 == y1) {
                 break;
@@ -90,63 +94,99 @@ namespace Graphics
         }
     }
     
-    void BackBuffer::drawTriangle(Vector a, Vector b, Vector c, const Color& color)
+    void BackBuffer::drawTriangle(World::Vertex va, World::Vertex vb, World::Vertex vc, const Color& color)
     {
-        if (a.y > b.y)
-        {
-            auto temp = b;
-            b = a;
-            a = temp;
+        if (va.coords.y > vb.coords.y) {
+            World::Vertex temp = vb;
+            vb = va;
+            va = temp;
         }
+        if (vb.coords.y > vc.coords.y) {
+            World::Vertex temp = vb;
+            vb = vc;
+            vc = temp;
+        }
+        if (va.coords.y > vb.coords.y) {
+            World::Vertex temp = vb;
+            vb = va;
+            va = temp;
+        }
+
+        Vector a = va.coords;
+        Vector b = vb.coords;
+        Vector c = vc.coords;
         
-        if (b.y > c.y)
-        {
-            auto temp = b;
-            b = c;
-            c = temp;
-        }
+        Vector lightPos{0, 10, 10};
         
-        if (a.y > b.y)
-        {
-            auto temp = b;
-            b = a;
-            a = temp;
-        }
+        float nl1 = computeNDotL(va.worldCoords, va.normal, lightPos);
+        float nl2 = computeNDotL(vb.worldCoords, vb.normal, lightPos);
+        float nl3 = computeNDotL(vc.worldCoords, vc.normal, lightPos);
+        
+        ScanLineData data;
         
         if (side(b, a, c) > 0) {
-            for (auto y = (int)a.y; y <= (int)c.y; y++) {
+            for (int y = static_cast<int>(a.y); y <= static_cast<int>(c.y); y++) {
+                data.currentY = y;
+                
                 if (y < b.y) {
-                     scanLine(y, a, c, a, b, color);
+                    data.ndotla = nl1;
+                    data.ndotlb = nl3;
+                    data.ndotlc = nl1;
+                    data.ndotld = nl2;
+                    scanLine(data, va, vc, va, vb, color);
                 } else {
-                    scanLine(y, a, c, b, c, color);
+                    data.ndotla = nl1;
+                    data.ndotlb = nl3;
+                    data.ndotlc = nl2;
+                    data.ndotld = nl3;
+                    scanLine(data, va, vc, vb, vc, color);
                 }
             }
         } else {
-            for (auto y = (int)a.y; y <= (int)c.y; y++) {
+            for (int y = static_cast<int>(a.y); y <= static_cast<int>(c.y); y++) {
+                data.currentY = y;
+                
                 if (y < b.y) {
-                    scanLine(y, a, b, a, c, color);
+                    data.ndotla = nl1;
+                    data.ndotlb = nl3;
+                    data.ndotlc = nl1;
+                    data.ndotld = nl2;
+                    scanLine(data, va, vb, va, vc, color);
                 } else {
-                    scanLine(y, b, c, a, c, color);
+                    data.ndotla = nl1;
+                    data.ndotlb = nl3;
+                    data.ndotlc = nl2;
+                    data.ndotld = nl3;
+                    scanLine(data, vb, vc, va, vc, color);
                 }
             }
         }
     }
     
-    void BackBuffer::scanLine(int y, const Vector& a, const Vector& b, const Vector& c, const Vector& d, const Color& color)
+    void BackBuffer::scanLine(ScanLineData data, const World::Vertex& va, const World::Vertex& vb, const World::Vertex& vc, const World::Vertex& vd, const Color& color)
     {
-        float gradient1 = a.y != b.y ? (y - a.y) / (b.y - a.y) : 1;
-        float gradient2 = c.y != d.y ? (y - c.y) / (d.y - c.y) : 1;
+        Vector pa = va.coords;
+        Vector pb = vb.coords;
+        Vector pc = vc.coords;
+        Vector pd = vd.coords;
         
-        int sx = static_cast<int>(interpolate(a.x, b.x, gradient1));
-        int ex = static_cast<int>(interpolate(c.x, d.x, gradient2));
+        float gradient1 = pa.y != pb.y ? (data.currentY - pa.y) / (pb.y - pa.y) : 1;
+        float gradient2 = pc.y != pd.y ? (data.currentY - pc.y) / (pd.y - pc.y) : 1;
         
-        float z1 = interpolate(a.z, b.z, gradient1);
-        float z2 = interpolate(c.z, d.z, gradient2);
+        int sx = static_cast<int>(interpolate(pa.x, pb.x, gradient1));
+        int ex = static_cast<int>(interpolate(pc.x, pd.x, gradient2));
         
-        for (int x = sx; x < ex; x++) {
+        float z1 = interpolate(pa.z, pb.z, gradient1);
+        float z2 = interpolate(pc.z, pd.z, gradient2);
+        
+        float snl = interpolate(data.ndotla, data.ndotlb, gradient1);
+        float enl = interpolate(data.ndotlc, data.ndotld, gradient2);
+        
+        for (int x = sx; x < ex; ++x) {
             float gradient = (x - sx) / static_cast<float>(ex - sx);
             float z = interpolate(z1, z2, gradient);
-            put(Vector{static_cast<float>(x), static_cast<float>(y), z}, color);
+            float ndotl = interpolate(snl, enl, gradient);
+            put(Vector(x, data.currentY, z), color * ndotl);
         }
     }
     

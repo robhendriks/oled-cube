@@ -33,7 +33,7 @@ namespace Math
         
         static Vector up()
         {
-            return {0, -1, 0};
+            return {0, 1, 0};
         }
         
         float length() const

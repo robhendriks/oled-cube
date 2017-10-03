@@ -12,13 +12,11 @@ namespace World
     struct Face
     {
         int a, b, c;
-        
-        Face(int a, int b, int c)
-        {
-            this->a = a;
-            this->b = b;
-            this->c = c;
-        }
+    };
+    
+    struct Vertex
+    {
+        Vector coords, normal, worldCoords;
     };
     
     class Camera;
@@ -29,11 +27,11 @@ namespace World
         std::string mName;
         Vector mPosition;
         Vector mRotation;
-        std::vector<Vector> mVertices;
+        std::vector<Vertex> mVertices;
         std::vector<Face> mFaces;
         
     public:
-        Mesh(const std::string& name, const std::vector<Vector>& vertices, const std::vector<Face>& faces);
+        Mesh(const std::string& name, const std::vector<Vertex>& vertices, const std::vector<Face>& faces);
         ~Mesh() = default;
         
         std::string& name();

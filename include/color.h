@@ -19,6 +19,11 @@ namespace Graphics
         {
         }
     };
+    
+    inline Color operator*(const Color& lhs, float rhs)
+    {
+        return Color{lhs.r * rhs, lhs.g * rhs, lhs.b * rhs, lhs.a * rhs};
+    }
 }
 
 #endif

@@ -5,6 +5,7 @@
 #include <vector>
 #include "color.h"
 #include "vector.h"
+#include "mesh.h"
 
 namespace Graphics
 {
@@ -12,7 +13,7 @@ namespace Graphics
     
     inline float clamp(float value, float min, float max)
     {
-        return std::max(min, std::min(value, max));
+        return std::max(min, std::min(max, value));
     }
     
     inline float interpolate(float min, float max, float gradient)
@@ -29,6 +30,23 @@ namespace Graphics
     {
         return cross(vec.x - from.x, vec.y - from.y, to.x - from.x, to.y - from.y);
     }
+    
+    inline float computeNDotL(Vector vertex, Vector normal, Vector lightPosition)
+    {
+        Vector lightDirection = lightPosition - vertex;
+        normal.normalize();
+        lightDirection.normalize();
+        return std::fmax(0, dot(normal, lightPosition));
+    }
+    
+    struct ScanLineData
+    {
+        int currentY;
+        float ndotla;
+        float ndotlb;
+        float ndotlc;
+        float ndotld;
+    };
     
     class BackBuffer
     {
@@ -49,9 +67,9 @@ namespace Graphics
         void clear(const Color& color);
         void put(const Vector& vec, const Color& color);
         
-        void drawLine(const Vector& a, const Vector& b, const Color& color);
-        void drawTriangle(Vector a, Vector b, Vector c, const Color& color);
-        void scanLine(int y, const Vector& a, const Vector& b, const Vector& c, const Vector& d, const Color& color);
+        void drawLine(const World::Vertex& va, const World::Vertex& vb, const Color& color);
+        void drawTriangle(World::Vertex a, World::Vertex b, World::Vertex c, const Color& color);
+        void scanLine(ScanLineData data, const World::Vertex& a, const World::Vertex& b, const World::Vertex& c, const World::Vertex& d, const Color& color);
         
         int width() const;
         int height() const;

@@ -3,7 +3,7 @@
 
 namespace World
 {
-    Mesh::Mesh(const std::string& name, const std::vector<Vector>& vertices, const std::vector<Face>& faces)
+    Mesh::Mesh(const std::string& name, const std::vector<Vertex>& vertices, const std::vector<Face>& faces)
     {
         mName = name;
         mVertices = vertices;
