@@ -10,8 +10,8 @@
 SDL_Window *gWindow = nullptr;
 SDL_Renderer *gRenderer = nullptr;
 
-#define WIDTH 320
-#define HEIGHT 240
+#define WIDTH 128
+#define HEIGHT 48
 
 int main(int argc, const char * argv[]) {
     //
@@ -20,7 +20,7 @@ int main(int argc, const char * argv[]) {
     Graphics::BackBuffer backBuffer{WIDTH, HEIGHT};
     
     World::Camera camera;
-    camera.setPosition({0, 0, 10});
+    camera.setPosition({0, 10, 10});
     camera.setTarget({0, 0, 0});
     
     // TODO: Clear this utter mess up pls

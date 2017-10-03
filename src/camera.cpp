@@ -11,7 +11,7 @@ namespace World
         
         Math::Matrix projection;
 //        Math::Matrix::perspective(0.78, aspect, 0.1, 1.0, projection);
-        Math::Matrix::ortho(buffer.width() / 30, buffer.height() / 30, 0.01, 1.0, projection);
+        Math::Matrix::ortho(buffer.width() / 5, buffer.height() / 5, 0.01, 1.0, projection);
         
         Math::Matrix translate, rotate, world;
         Math::Matrix::translate(mesh.mPosition, translate);
@@ -21,22 +21,22 @@ namespace World
         
         Math::Matrix transform = world * view * projection;
         
-        std::size_t i = 0;
-        std::size_t max = mesh.mFaces.size();
+//        std::size_t i = 0;
+//        std::size_t max = mesh.mFaces.size();
         for (const Face& face : mesh.mFaces) {
             Vector a, b, c;
             project(buffer, mesh.mVertices[face.a], transform, a);
             project(buffer, mesh.mVertices[face.b], transform, b);
             project(buffer, mesh.mVertices[face.c], transform, c);
             
-            /*buffer.drawLine(a, b, {1, 0, 0, 1});
-            buffer.drawLine(b, c, {0, 1, 0, 1});
-            buffer.drawLine(c, a, {0, 0, 1, 1});*/
+            buffer.drawLine(a, b, {1, 1, 1, 1});
+            buffer.drawLine(b, c, {1, 1, 1, 1});
+            buffer.drawLine(c, a, {1, 1, 1, 1});
             
-            float color = 0.25 + (i % max) * 0.75 / max;
+//            float color = 0.25 + (i % max) * 0.75 / max;
             
-            buffer.drawTriangle(a, b, c, {color, color, color, 1});
-           ++i;
+//            buffer.drawTriangle(a, b, c, {0, 0, 0, 1});
+//           ++i;
         }
     }
     
