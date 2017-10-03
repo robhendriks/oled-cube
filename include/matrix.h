@@ -2,8 +2,8 @@
 #define matrix_h
 
 #include <iostream>
-#include <stdint.h>
-#include <math.h>
+#include <cstdint>
+#include <cmath>
 #include <array>
 
 #include "vector.h"

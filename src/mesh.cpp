@@ -1,5 +1,4 @@
 #include "mesh.h"
-#include "camera.h"
 
 namespace World
 {

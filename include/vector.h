@@ -1,7 +1,7 @@
 #ifndef Vector_h
 #define Vector_h
 
-#include <math.h>
+#include <cmath>
 #include <iostream>
 
 namespace Math

@@ -1,11 +1,10 @@
 #include <iostream>
 #include <fstream>
-#include <SDL2/SDL.h>
-#include <json.hpp>
+#include <SDL.h>
 
-#include "math.h"
+#include "json.h"
+#include "vector.h"
 #include "world.h"
-#include "graphics.h"
 
 SDL_Window *gWindow = nullptr;
 SDL_Renderer *gRenderer = nullptr;
@@ -118,7 +117,7 @@ int main(int argc, const char * argv[]) {
         for (uint32_t i = 0; i < backBuffer.size(); i += 4) {
             SDL_SetRenderDrawColor(gRenderer, buffer[i], buffer[i + 1], buffer[i + 2], buffer[i + 3]);
             
-            uint16_t x, y;
+            int x, y;
             x = j % backBuffer.width();
             y = j / backBuffer.width();
             

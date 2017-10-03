@@ -1,7 +1,7 @@
 #ifndef back_buffer_h
 #define back_buffer_h
 
-#include <stdint.h>
+#include <cstdint>
 #include <vector>
 #include "color.h"
 #include "vector.h"

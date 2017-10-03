@@ -20,8 +20,7 @@ namespace World
             this->c = c;
         }
     };
-    
-    class Camera;
+
     class Mesh
     {
         friend class Camera;

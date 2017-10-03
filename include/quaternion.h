@@ -1,7 +1,7 @@
 #ifndef quaternion_h
 #define quaternion_h
 
-#include <math.h>
+#include <cmath>
 
 namespace Math
 {
