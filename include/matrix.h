@@ -50,6 +50,14 @@ namespace Math
             result.data[M43] = vec.z;
         }
 
+        static void scale(const Vector& vec, Matrix& result)
+        {
+            result.identity();
+            result.data[M11] = vec.x;
+            result.data[M22] = vec.y;
+            result.data[M33] = vec.z;
+        }
+
         static void rotate(float yaw, float pitch, float roll, Matrix& result)
         {
             Quaternion quat;

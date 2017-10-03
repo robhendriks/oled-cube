@@ -1,6 +1,7 @@
 #ifndef Vector_h
 #define Vector_h
 
+#include <tuple>
 #include <cmath>
 #include <iostream>
 
