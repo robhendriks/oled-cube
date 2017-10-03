@@ -10,8 +10,8 @@
 SDL_Window *gWindow = nullptr;
 SDL_Renderer *gRenderer = nullptr;
 
-#define WIDTH 480
-#define HEIGHT 320
+#define WIDTH 320
+#define HEIGHT 240
 
 int main(int argc, const char * argv[]) {
     //
@@ -95,7 +95,6 @@ int main(int argc, const char * argv[]) {
     
     bool quit = false;
     SDL_Event e;
-    int dirX = 1, dirY = 1;
     
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
@@ -110,21 +109,6 @@ int main(int argc, const char * argv[]) {
         cubeMesh.rotation().x += 0.01; // pitch
         cubeMesh.rotation().y += 0.02; // yaw
         cubeMesh.rotation().z += 0.01; // roll
-        
-        if (cubeMesh.position().x > 1) {
-            dirX = -1;
-        } else if (cubeMesh.position().x < -1) {
-            dirX = 1;
-        }
-        
-        if (cubeMesh.position().y > 1) {
-            dirY = -1;
-        } else if (cubeMesh.position().y < -1) {
-            dirY = 1;
-        }
-        
-        cubeMesh.position().x += 0.02 * dirX;
-        cubeMesh.position().y += 0.01 * dirY;
         
         backBuffer.clear({0, 0, 0, 1});
         camera.render(backBuffer, cubeMesh, {1, 1, 1, 1});

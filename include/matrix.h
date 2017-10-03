@@ -110,6 +110,27 @@ namespace Math
             result.data[M43] = q * zNear;
         }
         
+        static void ortho(float width, float height, float zNear, float zFar, Matrix& result)
+        {
+            float halfWidth = width * 0.5f;
+            float halfHeight = height * 0.5f;
+            orthoOffCenter(-halfWidth, halfWidth, -halfHeight, halfHeight, zNear, zFar, result);
+        }
+        
+        static void orthoOffCenter(float left, float right, float bottom, float top, float zNear, float zFar, Matrix& result)
+        {
+            float zRange = 1.0 / (zFar - zNear);
+            
+            result.identity();
+            
+            result.data[M11] = 2.0f / (right - left);
+            result.data[M22] = 2.0f / (top - bottom);
+            result.data[M33] = zRange;
+            result.data[M41] = (left + right) / (left - right);
+            result.data[M42] = (top + bottom) / (bottom - top);
+            result.data[M43] = -zNear * zRange;
+        }
+        
         void identity()
         {
             data[M11] = 1; data[M12] = 0; data[M13] = 0; data[M14] = 0;

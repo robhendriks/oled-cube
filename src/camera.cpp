@@ -10,7 +10,8 @@ namespace World
         float aspect = static_cast<float>(buffer.width()) / static_cast<float>(buffer.height());
         
         Math::Matrix projection;
-        Math::Matrix::perspective(0.78, aspect, 0.01, 1.0, projection);
+//        Math::Matrix::perspective(0.78, aspect, 0.1, 1.0, projection);
+        Math::Matrix::ortho(buffer.width() / 30, buffer.height() / 30, 0.01, 1.0, projection);
         
         Math::Matrix translate, rotate, world;
         Math::Matrix::translate(mesh.mPosition, translate);
@@ -20,15 +21,22 @@ namespace World
         
         Math::Matrix transform = world * view * projection;
         
+        std::size_t i = 0;
+        std::size_t max = mesh.mFaces.size();
         for (const Face& face : mesh.mFaces) {
             Vector a, b, c;
             project(buffer, mesh.mVertices[face.a], transform, a);
             project(buffer, mesh.mVertices[face.b], transform, b);
             project(buffer, mesh.mVertices[face.c], transform, c);
             
-            buffer.drawLine(a, b, color);
-            buffer.drawLine(b, c, color);
-            buffer.drawLine(c, a, color);
+            /*buffer.drawLine(a, b, {1, 0, 0, 1});
+            buffer.drawLine(b, c, {0, 1, 0, 1});
+            buffer.drawLine(c, a, {0, 0, 1, 1});*/
+            
+            float color = 0.25 + (i % max) * 0.75 / max;
+            
+            buffer.drawTriangle(a, b, c, {color, color, color, 1});
+           ++i;
         }
     }
     
@@ -39,6 +47,7 @@ namespace World
         
         result.x = tmp.x * buffer.width() + buffer.width() / 2.0;
         result.y = -tmp.y * buffer.height() + buffer.height() / 2.0;
+        result.z = tmp.z;
     }
     
     Vector& Camera::position()
